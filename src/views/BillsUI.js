@@ -18,9 +18,13 @@ const row = (bill) => {
     </tr>
     `)
   }
+  //ajout fonction tri par date décroissante
+const sortBillByDate = (a, b) => {
+  return new Date(a.date) - new Date(b.date);
 
+}
 const rows = (data) => {
-  return (data && data.length) ? data.map(bill => row(bill)).join("") : ""
+  return (data && data.length) ? data.sort(sortBillByDate).map(bill => row(bill)).join("") : ""
 }
 
 export default ({ data: bills, loading, error }) => {
