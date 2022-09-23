@@ -80,9 +80,29 @@ export default class {
 
   handleClickIconEye = () => {
     const billUrl = $('#icon-eye-d').attr("data-bill-url")
-    const imgWidth = Math.floor($('#modaleFileAdmin1').width() * 0.8)
-    $('#modaleFileAdmin1').find(".modal-body").html(`<div style='text-align: center;'><img width=${imgWidth} src=${billUrl} alt="Bill"/></div>`)
-    if (typeof $('#modaleFileAdmin1').modal === 'function') $('#modaleFileAdmin1').modal('show')
+    const billFileName = $('#icon-eye-d').attr("data-bill-fileName")
+    if(billFileName !== 'null'){
+      const imgWidth = Math.floor($('#modaleFileAdmin1').width() * 0.8)
+      $('#modaleFileAdmin1').find(".modal-body").html(`<div style='text-align: center;'><img width="100%" src=${billUrl} alt="Bill"/></div>`)
+      if (typeof $('#modaleFileAdmin1').modal === 'function') $('#modaleFileAdmin1').modal('show')
+    }else{
+      alert("Format d'image incorrect")
+    }
+   
+  }
+  handleClickIconDownload = () => {
+    const billUrl = $('#icon-eye-d').attr("data-bill-url")
+    const billFileName = $('#icon-eye-d').attr("data-bill-fileName")
+    if(billFileName !== 'null'){
+      const imgWidth = Math.floor($('#modaleFileAdmin1').width() * 0.8)
+      $('#modaleFileAdmin1').find(".modal-body").html(`<div style='text-align: center;'  class="bill-container"><img width=${imgWidth} src=${billUrl} alt="Bill"/></div>`)
+      let imageToDownload = document.querySelector('.bill-container img')
+      const doc = new jsPDF()
+      doc.addImage(imageToDownload, 10, 10, 200, 300)
+      doc.save(`${billFileName}.pdf`)
+    }else{
+      alert("Format d'image incorrect")
+    }
   }
 
   handleEditTicket(e, bill, bills) {
@@ -106,6 +126,7 @@ export default class {
       this.counter ++
     }
     $('#icon-eye-d').click(this.handleClickIconEye)
+    $('#icon-download-d').click(this.handleClickIconDownload)
     $('#btn-accept-bill').click((e) => this.handleAcceptSubmit(e, bill))
     $('#btn-refuse-bill').click((e) => this.handleRefuseSubmit(e, bill))
   }
@@ -131,6 +152,9 @@ export default class {
   }
 
   handleShowTickets(e, bills, index) {
+    bills.forEach(bill => {
+    $(`#open-bill${bill.id}`).off('click');
+    })
     if (this.counter === undefined || this.index !== index) this.counter = 0
     if (this.index === undefined || this.index !== index) this.index = index
     if (this.counter % 2 === 0) {

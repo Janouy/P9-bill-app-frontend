@@ -1,11 +1,15 @@
 import eyeBlueIcon from "../assets/svg/eye_blue.js"
 import downloadBlueIcon from "../assets/svg/download_blue.js"
 
-export default (billUrl) => {
+export default (billUrl, billName, billFileName) => {
+
   return (
     `<div class="icon-actions">
-      <div id="eye" data-testid="icon-eye" data-bill-url=${billUrl}>
+      <div id="eye" data-testid="icon-eye" data-bill-url=${billUrl} data-bill-name=${billFileName}>
       ${eyeBlueIcon}
+      </div>
+      <div id="download" data-testid="icon-download" data-bill-url=${billUrl} data-bill-name=${billFileName}>
+      ${downloadBlueIcon}
       </div>
     </div>`
   )

@@ -65,20 +65,25 @@
 
 .table td, .table th {
   border-top: 0px solid #fff !important;
+  
 }
 
 .table thead th {
   border-bottom: 0px solid #fff !important;
+ 
 }
 
 .table td, .table th {
   border-top: 0px solid #fff !important;
 }
 
-thead {
+.thead {
   text-align: left;
+  
 }
-
+.theadAction{
+  text-align: center;
+}
 .table-striped tbody tr:nth-of-type(odd) {
   background-color:#F3F5FA !important;
 }
