@@ -7,7 +7,7 @@ export default class NewBill {
     this.onNavigate = onNavigate
     this.store = store
     const formNewBill = this.document.querySelector(`form[data-testid="form-new-bill"]`)
-    formNewBill.addEventListener("submit", this.handleSubmit)
+    formNewBill.addEventListener("submit", (e) => this.handleSubmit(e))
     const file = this.document.querySelector(`input[data-testid="file"]`)
     file.addEventListener("change", this.handleChangeFile)
     this.fileUrl = null
@@ -28,11 +28,14 @@ export default class NewBill {
   showFieldError(elt){
     elt.dataset.errorVisible="true";
   }
+
+  hideFieldError(elt){
+    elt.dataset.errorVisible="false";
+  }
   handleChangeFile = e => {
     e.preventDefault()
     const file =this.document.querySelector(`input[data-testid="file"]`).files[0];
     const fileHtml = this.document.querySelector('.formData');
-    
     if(this.checkFileType(file)){
       const filePath = e.target.value.split(/\\/g)
       const fileName = filePath[filePath.length-1]
@@ -40,7 +43,7 @@ export default class NewBill {
       const email = JSON.parse(localStorage.getItem("user")).email
       formData.append('file', file)
       formData.append('email', email)
-    
+      this.hideFieldError(fileHtml)
       this.store
         .bills()
         .create({
@@ -60,7 +63,7 @@ export default class NewBill {
   handleSubmit = e => {
     e.preventDefault()
     const file =this.document.querySelector(`input[data-testid="file"]`).files[0];
-    console.log('e.target.querySelector(`input[data-testid="datepicker"]`).value', e.target.querySelector(`input[data-testid="datepicker"]`).value)
+    //console.log('e.target.querySelector(`input[data-testid="datepicker"]`).value', e.target.querySelector(`input[data-testid="datepicker"]`).value)
     if(this.checkFileType(file)){
     const email = JSON.parse(localStorage.getItem("user")).email
     const bill = {

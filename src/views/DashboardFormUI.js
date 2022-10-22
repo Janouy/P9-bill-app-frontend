@@ -71,7 +71,6 @@ export default (bill) => {
             <span id="file-name-admin">${bill.fileName}</span>
             <div class='icons-container'>
               <span id="icon-eye-d" data-testid="icon-eye-d" data-bill-url="${bill.fileUrl}" data-bill-fileName="${bill.fileName}"> ${eyeWhite} </span>
-              <span id="icon-download-d" data-testid="icon-download-d" data-bill-url="${bill.fileUrl}" data-bill-fileName="${bill.fileName}"> ${downloadWhite} </span>
             </div>
           </div>
         </div>
