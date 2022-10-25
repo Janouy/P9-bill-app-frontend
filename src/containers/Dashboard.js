@@ -131,9 +131,9 @@ export default class {
   }
 
   handleShowTickets(e, bills, index) {
-    // bills.forEach(bill => {
-    // $(`#open-bill${bill.id}`).off('click');
-    // })
+    bills.forEach(bill => {
+    $(`#open-bill${bill.id}`).off('click');
+    })
     if (this.counter === undefined || this.index !== index) this.counter = 0
     if (this.index === undefined || this.index !== index) this.index = index
     if (this.counter % 2 === 0) {
