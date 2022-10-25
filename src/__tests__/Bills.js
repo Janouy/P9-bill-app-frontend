@@ -43,16 +43,14 @@ describe("Given I am connected as an employee", () => {
       window.onNavigate(ROUTES_PATH.Bills)
       const store = null
       const billsContainer = new Bills({ document, onNavigate, store, localStorage })
-      // const handleClickIconEye = jest.fn((e) => billsContainer.handleClickIconEye)
       const handleClickIconEye = jest.spyOn(billsContainer, "handleClickIconEye")
-      //screen.getAllByTestId('icon-eye').every((eye) => eye.addEventListener('click', handleClickIconEye))
       const eye = screen.getAllByTestId('icon-eye')[0]
       userEvent.click(eye)
       expect(handleClickIconEye).toHaveBeenCalledWith(eye)
       let modale = screen.getByTestId('modaleFile')
       expect(modale).toBeTruthy()
     })
-    it('Should redirect on bill/new when I click on "nouvelle note de frais', () => {
+    it('Should redirect on newBill when I click on "nouvelle note de frais', () => {
       window.onNavigate(ROUTES_PATH.Bills)
       const store = null
       const billsContainer = new Bills({ document, onNavigate, store, localStorage })
@@ -71,44 +69,17 @@ describe("Given I am connected as an employee", () => {
       expect(screen.getAllByText('Loading...')).toBeTruthy()
     })
   })
-  describe('When I am on Bills page but back-end send an error message', () => {
+  describe('When I am on Bills page but back-end send an error message 404', () => {
     it('Should render the error page', () => {
-      document.body.innerHTML = BillsUI({ error: 'some error message' })
-      expect(screen.getAllByText('Erreur')).toBeTruthy()
+      document.body.innerHTML = BillsUI({ error: 'Erreur 404' })
+      expect(screen.getAllByText('Erreur 404')).toBeTruthy()
     })
   })
-  describe("When an error occurs on API", () => {
-    beforeEach(() => {
-      document.body.innerHTML = BillsUI({ data: bills })
-      jest.spyOn(mockStore, "bills")
-      const root = document.createElement("div")
-      root.setAttribute("id", "root")
-      document.body.appendChild(root)
-      router()
-    })
-    it("Should not fetch bills from an API and fail with 404 message error", async () => {
-      mockStore.bills.mockImplementationOnce(() => {
-        return {
-          list : () =>  {
-            return Promise.reject(new Error("Erreur 404"))
-          }
-        }})
-      window.onNavigate(ROUTES_PATH.Bills)
-      await new Promise(process.nextTick);
-      const message = await screen.getByText(/Erreur 404/)
-      expect(message).toBeTruthy()
-    })
-    it("Should not fetch bills from an API and fails with 500 message error", async () => {
-      mockStore.bills.mockImplementationOnce(() => {
-        return {
-          list : () =>  {
-            return Promise.reject(new Error("Erreur 500"))
-          }
-        }})
-      window.onNavigate(ROUTES_PATH.Bills)
-      await new Promise(process.nextTick);
-      const message = await screen.getByText(/Erreur 500/)
-      expect(message).toBeTruthy()
+  describe('When I am on Bills page but back-end send an error message 500', () => {
+    it('Should render the error page', () => {
+      document.body.innerHTML = BillsUI({ error: 'Erreur 500' })
+      expect(screen.getAllByText('Erreur 500')).toBeTruthy()
     })
   })
+ 
 })
