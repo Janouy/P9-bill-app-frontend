@@ -33,7 +33,7 @@ describe("Given I am connected as an employee", () => {
       expect(windowIcon.classList.contains('active-icon')).toBe(true)
 
     })
-    fit("Should fetche bills from mock API GET", async () => {
+    it("Should fetche bills from mock API GET", async () => {
       expect(screen.getAllByTestId("rowBill")).toBeTruthy()
     })
     it("Should be ordered the bills from earliest to latest", () => {
